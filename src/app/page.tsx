@@ -25,6 +25,7 @@ const HomePage: React.FC = () => {
     display: "flex",
     justifyContent: "center",
   };
+
   return (
     <ThemeProvider theme={currentTheme}>
       <div className={`min-h-screen`}>
@@ -33,6 +34,8 @@ const HomePage: React.FC = () => {
           maxWidth="lg"
         >
           <Header toggleTheme={toggleTheme} />
+
+          {/* main intro */}
           <Grid2 container spacing={2}>
             <Grid2 xs={12} md={4} lg={4} justifyContent="center">
               <div style={styleImage}>
