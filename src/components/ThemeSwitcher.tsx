@@ -10,7 +10,7 @@ interface ThemeSwitcherProps {
   }
 
 const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({toggleTheme}) => {
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(true);
 
 
   useEffect(() => {
@@ -37,8 +37,8 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({toggleTheme}) => {
   };
 
   return (
-    <IconButton onClick={triggerTheme} color="inherit">
-      {isDarkMode ? <Brightness7Icon /> : <Brightness4Icon />}
+    <IconButton onClick={triggerTheme}>
+      {isDarkMode ? <Brightness4Icon /> : <Brightness7Icon />}
     </IconButton>
   );
 };
