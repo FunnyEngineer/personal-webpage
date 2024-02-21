@@ -104,7 +104,7 @@ const HomePage: React.FC = () => {
               <EventCard
                 datetime="December 2023"
                 title="NeurIPS 2023"
-                content="Climate change AI workshop"
+                content="Climate Change AI Workshop"
                 image="/events/NeurIPS2023/header.jpeg"
               />
             </Grid2>

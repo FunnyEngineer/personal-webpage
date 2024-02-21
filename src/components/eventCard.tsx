@@ -23,7 +23,7 @@ const EventCard: React.FC<EventCardProps> = ({
           <Typography variant="h5" sx={{ flexGrow: 1 }}>
             {title}
           </Typography>
-          <Typography variant="h7" sx={{ fontStyle: "italic" }}>
+          <Typography variant="body1" sx={{ fontStyle: "italic" }}>
             {datetime}
           </Typography>
         </Box>
