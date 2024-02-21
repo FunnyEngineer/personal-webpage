@@ -84,7 +84,7 @@ const HomePage: React.FC = () => {
             </Grid2>
           </Grid2>
 
-          <div className="flex mt-8">
+            <div className="flex mt-8" style={{ justifyContent: "center" }}>
             <Link href="https://www.linkedin.com/in/ting-yu-dai-1abb1a1a1/">
               <LinkedIn fontSize="large" color="inherit" />
             </Link>
@@ -96,10 +96,10 @@ const HomePage: React.FC = () => {
             </Link>
           </div>
           {/* some activity */}
-          <Typography variant="h2" component="h2" className="mt-8">
+          <Typography variant="h2" component="h2" align='center' style={{marginTop: "2rem"}}>
             Recent Activities
           </Typography>
-          <Grid2 container spacing={2} className="mt-8">
+          <Grid2 container spacing={2} style={{marginTop: "2rem"}}>
             <Grid2 xs={12} md={6}>
               <EventCard
                 datetime="December 2023"

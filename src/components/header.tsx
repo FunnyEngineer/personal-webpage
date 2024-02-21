@@ -34,10 +34,7 @@ const Header: React.FC<HeaderProps> = ({ toggleTheme }) => {
         <Link href="/repositories" passHref>
           <Button>Repositories</Button>
         </Link>
-        <Link href="/cv" passHref>
-          <Button>CV</Button>
-        </Link>
-        <Link href="/resume" passHref>
+        <Link href="/Resume_Research_Climate.pdf" passHref>
           <Button>Resume</Button>
         </Link>
         <ThemeSwitcher toggleTheme={toggleTheme} />
