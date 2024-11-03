@@ -104,8 +104,32 @@ const HomePage: React.FC = () => {
               <EventCard
                 datetime="December 2023"
                 title="NeurIPS 2023"
-                content="Climate Change AI Workshop"
+                content="Present a poster at the Climate Change AI Workshop about CityTFT, a transformer model for urban building energy modeling. My first in-person AI conference and having a great time at New Orleans."
                 image="/events/NeurIPS2023/header.jpeg"
+              />
+            </Grid2>
+            <Grid2 xs={12} md={6}>
+              <EventCard
+                datetime="July 2024"
+                title="i3ce 2024"
+                content="Attended i3ce conference (my first in-person civil conference) and reunited with friends that motivated me to pursue a PhD"
+                image="\events\i3ce2024\header.jpg"
+              />
+            </Grid2>
+            <Grid2 xs={12} md={6}>
+              <EventCard
+                datetime="May - Aug. 2024"
+                title="Fujitsu Internship"
+                content="My second internship during the PhD study. Spending three months to work on Precipitation downscaling using diffusion model. First time feeling the possibility to get into the industrial lab."
+                image="\events\fujitsu2024\header.jpg"
+              />
+            </Grid2>
+            <Grid2 xs={12} md={6}>
+              <EventCard
+                datetime="October 2024"
+                title="Comprehensive Exam"
+                content="Just finish the meeting with my phd committee. The topic will be around building energy modeling, and they are making sure I won't do anything crazy before I defend my PhD. Supre excited about the coming work. Let's get it done."
+                image="\events\compre2024\header.png"
               />
             </Grid2>
           </Grid2>

@@ -16,7 +16,12 @@ const EventCard: React.FC<EventCardProps> = ({
   return (
     <Card>
       {image && (
-        <CardMedia component="img" height="60" image={image} alt={title} />
+        <CardMedia component="img" sx={{
+          height: 300,
+          // width: 120,
+          objectFit: 'cover',
+          objectPosition: 'center'
+        }} image={image} alt={title} />
       )}
       <CardContent>
         <Box display="flex" flexDirection="row" alignItems="center">
