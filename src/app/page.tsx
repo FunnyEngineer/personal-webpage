@@ -8,7 +8,7 @@ import Image from "next/image";
 import CustomLink from "@/components/customLink";
 import { GitHub, LinkedIn, School } from "@mui/icons-material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
-import EventCard from "@/components/eventCard";
+import TimelineComponent from "@/components/timeline";
 
 const HomePage: React.FC = () => {
   const [theme, setTheme] = useState<string>("dark");
@@ -31,7 +31,22 @@ const HomePage: React.FC = () => {
       <div className={`min-h-screen`}>
         <Container
           className="py-20 flex flex-col items-center justify-center"
-          maxWidth="lg"
+          maxWidth={false}
+          sx={{
+            maxWidth: {
+              xs: "100%",
+              sm: "100%",
+              md: "1200px",
+              lg: "1400px",
+              xl: "1600px",
+            },
+            padding: {
+              xs: "80px 16px",
+              sm: "80px 24px",
+              md: "80px 32px",
+              lg: "80px 40px",
+            },
+          }}
         >
           <Header toggleTheme={toggleTheme} />
 
@@ -65,8 +80,8 @@ const HomePage: React.FC = () => {
                   <em>Eat well, Sleep well, Think well, and Research.</em>
                 </Typography>
                 <Typography variant="body1">
-                  I am a PhD student at the University of Texas at Austin where
-                  I study machine learning, sustainable system, and climate
+                  I am a PhD student at the University of Texas at Austin, where
+                  I study machine learning, sustainable systems, and climate
                   change. My advisors are{" "}
                   <CustomLink href="https://niyogi.dev/">
                     {" "}
@@ -76,15 +91,16 @@ const HomePage: React.FC = () => {
                   <CustomLink href="https://www.ie-lab.org/">
                     Dr. Zoltan Nagy
                   </CustomLink>
-                  . My research interests include machine learning on urban
-                  energy systems and geospatial data. I am passionate to code
-                  and explore the real world data distribution.
+                  . My research interests include applying machine learning to
+                  urban energy systems and geospatial data analysis. I am
+                  passionate about coding and exploring real-world data
+                  distributions.
                 </Typography>
               </div>
             </Grid2>
           </Grid2>
 
-            <div className="flex mt-8" style={{ justifyContent: "center" }}>
+          <div className="flex mt-8" style={{ justifyContent: "center" }}>
             <Link href="https://www.linkedin.com/in/ting-yu-dai-1abb1a1a1/">
               <LinkedIn fontSize="large" color="inherit" />
             </Link>
@@ -95,44 +111,79 @@ const HomePage: React.FC = () => {
               <School fontSize="large" />
             </Link>
           </div>
-          {/* some activity */}
-          <Typography variant="h2" component="h2" align='center' style={{marginTop: "2rem"}}>
+          {/* Timeline of activities */}
+          <Typography
+            variant="h2"
+            component="h2"
+            align="center"
+            style={{ marginTop: "2rem" }}
+          >
             Recent Activities
           </Typography>
-          <Grid2 container spacing={2} style={{marginTop: "2rem"}}>
-            <Grid2 xs={12} md={6}>
-              <EventCard
-                datetime="December 2023"
-                title="NeurIPS 2023"
-                content="Present a poster at the Climate Change AI Workshop about CityTFT, a transformer model for urban building energy modeling. My first in-person AI conference and having a great time at New Orleans."
-                image="/events/NeurIPS2023/header.jpeg"
-              />
-            </Grid2>
-            <Grid2 xs={12} md={6}>
-              <EventCard
-                datetime="July 2024"
-                title="i3ce 2024"
-                content="Attended i3ce conference (my first in-person civil conference) and reunited with friends that motivated me to pursue a PhD"
-                image="\events\i3ce2024\header.jpg"
-              />
-            </Grid2>
-            <Grid2 xs={12} md={6}>
-              <EventCard
-                datetime="May - Aug. 2024"
-                title="Fujitsu Internship"
-                content="My second internship during the PhD study. Spending three months to work on Precipitation downscaling using diffusion model. First time feeling the possibility to get into the industrial lab."
-                image="\events\fujitsu2024\header.jpg"
-              />
-            </Grid2>
-            <Grid2 xs={12} md={6}>
-              <EventCard
-                datetime="October 2024"
-                title="Comprehensive Exam"
-                content="Just finish the meeting with my phd committee. The topic will be around building energy modeling, and they are making sure I won't do anything crazy before I defend my PhD. Supre excited about the coming work. Let's get it done."
-                image="\events\compre2024\header.png"
-              />
-            </Grid2>
-          </Grid2>
+          <Box
+            style={{ marginTop: "2rem" }}
+            sx={{
+              width: "100%",
+              maxWidth: {
+                xs: "100%",
+                sm: "100%",
+                md: "1200px",
+                lg: "1400px",
+                xl: "1600px",
+              },
+              margin: "2rem auto 0",
+              padding: {
+                xs: "0",
+                md: "0 24px",
+                lg: "0 32px",
+              },
+            }}
+          >
+            <TimelineComponent
+              events={[
+                {
+                  datetime: "February 2025",
+                  title: "AAAI 2025",
+                  content:
+                    "Attended AAAI 2025 conference to present my internship work on precipitation downscaling using diffusion models. I was in the social impact track and saw some friends that I met at NeurIPS 2023.The community is so small that people often cross paths in different conferences. This is my first time that a work actually gets accepted to a top AI conference in the track with proceedings. Feel so good to be recognized.",
+                  image: "/events/aaai25/header.jpeg",
+                  type: "conference",
+                },
+                {
+                  datetime: "October 2024",
+                  title: "Comprehensive Exam",
+                  content:
+                    "Successfully completed my PhD comprehensive exam with my committee. My research will focus on building energy modeling, and I'm excited about the upcoming work ahead. The committee ensured I have a solid foundation before defending my PhD dissertation.",
+                  image: "/events/compre2024/header.png",
+                  type: "exam",
+                },
+                {
+                  datetime: "May - Aug. 2024",
+                  title: "Fujitsu Internship",
+                  content:
+                    "Completed my second internship during PhD studies, spending three months working on precipitation downscaling using diffusion models. This experience opened my eyes to the possibilities of working in an industrial research lab.",
+                  image: "/events/fujitsu2024/header.jpg",
+                  type: "internship",
+                },
+                {
+                  datetime: "July 2024",
+                  title: "i3ce 2024",
+                  content:
+                    "Attended the i3ce conference (my first in-person civil engineering conference) and reunited with friends who motivated me to pursue a PhD.",
+                  image: "/events/i3ce2024/header.jpg",
+                  type: "conference",
+                },
+                {
+                  datetime: "December 2023",
+                  title: "NeurIPS 2023",
+                  content:
+                    "Presented a poster at the Climate Change AI Workshop about CityTFT, a transformer model for urban building energy modeling. This was my first in-person AI conference, and I had a wonderful time in New Orleans.",
+                  image: "/events/NeurIPS2023/header.jpeg",
+                  type: "conference",
+                },
+              ]}
+            />
+          </Box>
         </Container>
       </div>
     </ThemeProvider>

@@ -19,7 +19,7 @@ const EventCard: React.FC<EventCardProps> = ({
         <CardMedia component="img" sx={{
           height: 300,
           // width: 120,
-          objectFit: 'cover',
+          objectFit: 'contain',
           objectPosition: 'center'
         }} image={image} alt={title} />
       )}
