@@ -18,6 +18,9 @@ const Header: React.FC<HeaderProps> = ({ toggleTheme }) => {
       style={{ backgroundColor: "transparent", boxShadow: "none" }}
     >
       <Toolbar>
+        <Link href="/" passHref>
+          <Button>Home</Button>
+        </Link>
         <Typography
           variant="h6"
           component="div"
@@ -25,16 +28,10 @@ const Header: React.FC<HeaderProps> = ({ toggleTheme }) => {
         ></Typography>
         {/* Rest of the code */}
 
-        <Link href="/media" passHref>
-          <Button>Media</Button>
+        <Link href="/blog" passHref>
+          <Button>Blog</Button>
         </Link>
-        <Link href="/publications" passHref>
-          <Button>Publications</Button>
-        </Link>
-        <Link href="/repositories" passHref>
-          <Button>Repositories</Button>
-        </Link>
-        <Link href="/Resume_Research_Climate.pdf" passHref>
+        <Link href="/Resume_Ting-Yu_Dai.pdf" passHref>
           <Button>Resume</Button>
         </Link>
         <ThemeSwitcher toggleTheme={toggleTheme} />
