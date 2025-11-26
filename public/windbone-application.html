@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrecipDiff Project - Ting-Yu Dai</title>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #292929;
+            --text-secondary: #757575;
+            --code-bg: #f2f2f2;
+            --border-color: #e6e6e6;
+        }
+        
+        [data-theme="dark"] {
+            --bg-color: #1a1a1a;
+            --text-color: #e4e4e4;
+            --text-secondary: #a0a0a0;
+            --code-bg: #323232;
+            --border-color: #404040;
+        }
+        
+        body {
+            font-family: charter, Georgia, Cambria, "Times New Roman", Times, serif;
+            max-width: 728px;
+            margin: 0 auto;
+            padding: 40px 24px;
+            line-height: 1.58;
+            color: var(--text-color);
+            background: var(--bg-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+        
+        .theme-toggle:hover {
+            opacity: 0.8;
+        }
+        h1 {
+            font-size: 2.75rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            margin-top: 2rem;
+            margin-bottom: 0.5rem;
+            font-family: sohne, "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+        h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.3;
+            margin-top: 2rem;
+            margin-bottom: 0.5rem;
+            font-family: sohne, "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            line-height: 1.4;
+            margin-top: 1.75rem;
+            margin-bottom: 0.5rem;
+            font-family: sohne, "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+        p, li {
+            font-size: 1.25rem;
+            line-height: 1.58;
+            margin-bottom: 2rem;
+        }
+        ul, ol {
+            padding-left: 2rem;
+        }
+        strong {
+            font-weight: 700;
+        }
+        em {
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+        code {
+            font-family: Menlo, Monaco, "Courier New", Courier, monospace;
+            background: var(--code-bg);
+            padding: 0.15rem 0.4rem;
+            border-radius: 3px;
+            font-size: 1.125rem;
+            color: var(--text-color);
+        }
+        
+        ol, ul {
+            color: var(--text-color);
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        // Initialize theme from localStorage or system preference
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+            updateToggleButton(theme);
+        }
+        
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateToggleButton(newTheme);
+        }
+        
+        function updateToggleButton(theme) {
+            const button = document.getElementById('theme-toggle');
+            if (button) {
+                button.textContent = theme === 'dark' ? '☀️ Light' : '🌙 Dark';
+            }
+        }
+        
+        // Initialize theme on page load
+        initTheme();
+    </script>
+</head>
+<body>
+    <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()">🌙 Dark</button>
+    <h1>Project: PrecipDiff – High-Resolution Atmospheric Downscaling via Residual Diffusion</h1>
+
+    <h2>The Problem: Addressing the Global Data Gap</h2>
+    <p>Water-related disasters account for over 91% of deaths in natural disasters, largely in low-income countries where ground monitoring is scarce. While Weather Surveillance Radars (WSR) offer high-precision data, they are prohibitively expensive; for instance, Africa possesses fewer than 40 WSRs compared to over 600 in the US and Europe.</p>
+
+    <p>Satellite-based Precipitation Products (SPPs) offer global coverage but suffer from two critical limitations:</p>
+    <ol>
+        <li><strong>Systematic Bias:</strong> Discrepancies arise from indirect measurement techniques compared to ground radar.</li>
+        <li><strong>Low Resolution:</strong> Operational products like IMERG are coarse (10 km), missing the fine-scale details required for urban flood modeling (1 km).</li>
+    </ol>
+
+    <p><strong>The Goal:</strong> create a unified framework to correct satellite bias and downscale imagery from 10 km to 1 km purely using computer vision techniques, without relying on auxiliary meteorological variables (e.g., wind, temperature).</p>
+
+    <h2>Mathematical Formulation</h2>
+    <p>We formulated the problem not as direct image generation, but as <strong>Residual Learning</strong> using Denoising Diffusion Probabilistic Models (DDPMs).</p>
+
+    <p>The core hypothesis is that precipitation \(x_{HR}\) can be modeled as a low-resolution base \(x_{LR}\) plus a high-frequency residual \(\epsilon\):</p>
+    <p style="text-align: center;">$$x_{HR} = Upsample(x_{LR}) + \epsilon$$</p>
+
+    <p>We employ a forward diffusion process that gradually adds Gaussian noise to the residual:</p>
+    <p style="text-align: center;">$$q(x_t|x_{t-1}) = \mathcal{N}(x_t; \sqrt{1-\beta_t}x_{t-1}, \beta_t I)$$</p>
+    <p>where \(\beta_t\) controls the variance schedule.</p>
+
+    <p>The generative reverse process learns to recover the residual by denoising, parameterized by a U-Net \(\theta\):</p>
+    <p style="text-align: center;">$$p_{\theta}(x_{t-1}|x_t) = \mathcal{N}(x_{t-1}; \mu_{\theta}(x_t, t), \Sigma_{\theta}(x_t, t))$$</p>
+    <p>The model is conditioned on the coarse satellite imagery to guide the generation of texture and storm structure.</p>
+
+    <h2>Computational Strategy & Bottlenecks</h2>
+
+    <h3>Toolchain</h3>
+    <ul>
+        <li><strong>Language:</strong> Python</li>
+        <li><strong>Deep Learning Framework:</strong> PyTorch</li>
+        <li><strong>Architecture:</strong> Custom U-Net with attention mechanisms.</li>
+        <li><strong>Hardware:</strong> 2x NVIDIA Quadro RTX 8000 GPUs.</li>
+    </ul>
+
+    <h3>The Computational Bottleneck</h3>
+    <p>The fundamental limit we pushed against was the <strong>stochastic nature of high-dimensional image synthesis</strong> combined with memory bandwidth constraints.</p>
+
+    <ol>
+        <li><strong>Complexity vs. Compute:</strong> Precipitation involves abrupt spatial changes and extreme sparsity (many zeros). Standard regression models (e.g., Swin2SR) produced "smooth" blurry outputs that failed to capture storm intensity. To capture high-frequency detail, we had to use a diffusion model, which is computationally expensive due to the iterative denoising steps required during inference.</li>
+        <li><strong>Pushing the Limit:</strong> We trained two distinct models:
+            <ul>
+                <li><strong>Correction Model:</strong> 3-block U-Net on 20x20 patches.</li>
+                <li><strong>Downscaling Model:</strong> 4-block U-Net with latent channels up to 512, processing 184x200 pixel operational radar images.</li>
+                <li><strong>Training Intensity:</strong> The models were trained for 2000 epochs, taking approximately 10 hours of continuous compute on the RTX 8000 cluster to converge on the complex residual distribution.</li>
+            </ul>
+        </li>
+    </ol>
+
+    <h2>Visuals and Results</h2>
+
+    <h3>1. The Unified Framework</h3>
+    <p>The system pipelines a Bias Correction Diffusion Model feeding into a Downscaling Diffusion Model.</p>
+    <p><em>Figure 1: The inference process where satellite data is first corrected, then upsampled and detailed via residual generation.</em></p>
+
+    <h3>2. Restoration of Storm Structure</h3>
+    <p>The diffusion approach successfully recovered high-intensity storm centers that traditional methods smoothed out.</p>
+    <p><em>Figure 2: Visual results showing (a) Original coarse Satellite data, (c) Our Corrected & Downscaled prediction, and (d) Ground Truth. Note the recovery of the high-intensity red cells in the center of the storm.</em></p>
+
+    <h3>3. Generalization</h3>
+    <p>Despite being trained on Seattle region data, the model showed strong zero-shot generalization to other climates, such as New York and San Jose.</p>
+    <p><em>Figure 3: Downscaling performance on out-of-distribution regions (New York and San Jose), demonstrating the model's ability to hallucinate realistic weather patterns in unseen geographies.</em></p>
+
+    <h3>Key Metrics</h3>
+    <ul>
+        <li><strong>Downscaling Accuracy:</strong> Achieved an RMSE of <strong>0.4543</strong> compared to 0.8642 for Linear Regression.</li>
+        <li><strong>Structural Similarity:</strong> Improved SSIM from 0.7378 to <strong>0.8249</strong>, validating the visual fidelity of the generated storm fronts.</li>
+    </ul>
+</body>
+</html>

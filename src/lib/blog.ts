@@ -11,6 +11,7 @@ export interface BlogPost {
   tags: string[];
   coverImage?: string;
   content: string;
+  hidden?: boolean;
 }
 
 const blogDirectory = path.join(process.cwd(), 'content/blog');
@@ -39,8 +40,10 @@ export function getAllBlogPosts(): BlogPost[] {
         tags: data.tags || [],
         coverImage: data.coverImage,
         content,
+        hidden: data.hidden || false,
       } as BlogPost;
-    });
+    })
+    .filter((post) => !post.hidden); // Exclude hidden posts from listing
 
   // Sort posts by date
   return allPostsData.sort((a, b) => {
@@ -67,6 +70,7 @@ export function getBlogPostBySlug(slug: string): BlogPost | null {
       tags: data.tags || [],
       coverImage: data.coverImage,
       content,
+      hidden: data.hidden || false,
     } as BlogPost;
   } catch (error) {
     return null;

@@ -3,8 +3,11 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import "katex/dist/katex.min.css";
 
 interface MarkdownContentProps {
   content: string;
@@ -62,11 +65,19 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({ content }) => {
           lineHeight: 1.58,
           marginBottom: "2rem",
           paddingLeft: "2rem",
+          listStylePosition: "outside",
+        },
+        "& ol": {
+          listStyleType: "decimal",
+        },
+        "& ul": {
+          listStyleType: "disc",
         },
         "& li": {
           marginBottom: "0.875rem",
           lineHeight: 1.58,
           paddingLeft: "0.5rem",
+          display: "list-item",
         },
         "& code": {
           backgroundColor: (theme) => theme.palette.mode === 'dark' ? "rgba(50, 50, 50, 1)" : "rgba(242, 242, 242, 1)",
@@ -118,7 +129,8 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({ content }) => {
       }}
     >
       <ReactMarkdown
-        remarkPlugins={[remarkGfm]}
+        remarkPlugins={[remarkGfm, remarkMath]}
+        rehypePlugins={[rehypeKatex]}
         components={{
           code({ node, inline, className, children, ...props }: any) {
             const match = /language-(\w+)/.exec(className || "");
